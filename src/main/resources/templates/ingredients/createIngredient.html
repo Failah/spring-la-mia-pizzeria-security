@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Aggiungi Pizza</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
+	<link rel="stylesheet"
+	th:href="@{/css/main.css}" />
+</head>
+<body class="vs-bg-custom vs-fixed-height-100 text-white">
+<div th:replace="~{fragments :: navbar}"></div>
+	<div class="container my-5 py-5">
+		<h1 class="mt-5 mb-4 text-center vs-form-padding">Aggiungi un nuovo ingrediente</h1>
+		<form th:action="@{/ingredients/create}" th:object="${ingredient}"
+			method="post">
+			<ul>
+				<li th:each="err : ${#fields.allErrors()}" th:text="${err}"
+					class="text-danger"></li>
+			</ul>
+			<div class="form-group">
+				<label for="name">Nome</label> <input type="text"
+					class="form-control mt-2" id="name" name="name"
+					placeholder="Inserisci il nome dell'ingrediente" th:field="*{title}"
+					th:errorClass="is-invalid">
+				<div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+					<ul>
+						<li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+					</ul>
+				</div>
+			</div>
+			
+			<div>
+				<button type="submit" class="btn btn-success mt-3">Aggiungi
+					ingrediente</button>
+			</div>
+			<div th:replace="~{fragments :: back}"></div>
+		</form>
+	</div>
+	<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

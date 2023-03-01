@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Modifica ingrediente</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+</head>
+<body class="vs-bg-custom vs-fixed-height-100 text-white">
+	<div th:replace="~{fragments :: navbar}"></div>
+	<div class="container vs-custom-flex">
+		<div>
+			<h1>Modifica ingrediente</h1>
+			<form method="post"
+				th:action="@{/ingredients/edit/{id}(id=${ingredient.id})}">
+				<div class="form-group mb-3">
+					<label class="pb-2 pt-2" for="title">Nome</label> <input
+						type="text" class="form-control" id="title" name="title"
+						th:value="${ingredient.title}" />
+				</div>
+				<div>
+					<button type="submit" class="btn btn-success mt-2 vs-inline-block vs-mt-7px">Salva</button>
+					<div class="vs-inline-block">
+						<a th:href="@{/ingredients}" class="btn btn-primary btn-block">Torna
+							all'elenco ingredienti</a>
+					</div>
+					<div class="vs-inline-block">
+						<a th:href="@{/pizzas}" class="btn btn-primary btn-block">Torna
+							all'elenco pizze</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

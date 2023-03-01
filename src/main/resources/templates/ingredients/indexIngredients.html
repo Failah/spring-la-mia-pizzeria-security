@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>La mia Pizzeria - Ingredienti</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+</head>
+<body class="vs-bg-custom vs-fixed-height-100">
+
+	<div th:replace="~{fragments :: navbar}"></div>
+
+	<div class="container mt-5 bg-light p-4 vs-fixed-height-80 vs-border">
+		<h1 class="mt-2 mb-4 text-center">Lista Ingredienti</h1>
+
+		<div class="row vs-fixed-height-60 justify-content-center">
+			<div class="col-md-12 w-75">
+				<table class="table table-striped"
+					th:if="${not #lists.isEmpty(ingredients)}">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nome</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="ingredient : ${ingredients}">
+							<td th:text="${ingredient.id}"></td>
+							<td th:text="${ingredient.title}"></td>
+							<td class="d-flex justify-content-end"><a
+								th:href="@{/ingredients/edit/{id}(id=${ingredient.id})}"
+								class="btn btn-success btn-sm me-1 rounded-2"
+								style="line-height: normal;"><span class="align-middle">Modifica</span></a>
+								<form
+									th:action="@{'/ingredients/delete/{id}' (id=${ingredient.id})}"
+									method="post"
+									onsubmit="return confirm('Sei sicuro di voler cancellare questo ingrediente?')">
+									<input type="hidden" name="_method" value="delete" />
+									<button type="submit" class="btn btn-danger">Cancella
+										ingrediente</button>
+								</form></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="alert alert-info" th:if="${#lists.isEmpty(ingredients)}">
+					<p>Non ci sono ingredienti al momento!.</p>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-3 mt-5 text-center">
+				<a th:href="@{/ingredients/create}"
+					class="btn btn-success btn-block">Aggiungi un Ingrediente</a>
+			</div>
+			<div class="col-3 mt-5 text-center">
+				<a th:href="@{/pizzas}" class="btn btn-primary btn-block">Indietro</a>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Crea offerta speciale</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+</head>
+<body class="vs-bg-custom vs-fixed-height-100">
+	<div th:replace="~{fragments :: navbar}"></div>
+	<div class="container mt-3 mt-5 text-white vs-custom-flex">
+		<div>
+			<h1>Crea nuova offerta speciale</h1>
+			<form id="specialOffer-form" th:action="@{/special-offers/store}"
+				th:object="${specialOffer}" method="post">
+				<input type="hidden" th:name="pizzaId" th:value="${pizzaId}">
+				<input type="hidden" th:field="${specialOffer.pizza}">
+				<div class="mb-3">
+					<label for="title" class="form-label">Titolo</label> <input
+						type="text" class="form-control" id="title" th:field="*{title}"
+						required>
+				</div>
+				<div class="mb-3">
+					<label for="startDate" class="form-label">Data di inizio</label> <input
+						type="date" class="form-control" id="startDate"
+						th:field="*{startDate}" required>
+				</div>
+				<div class="mb-3">
+					<label for="endDate" class="form-label">Data di fine</label> <input
+						type="date" class="form-control" id="endDate"
+						th:field="*{endDate}" required>
+				</div>
+				<button type="submit" class="btn btn-success">Crea</button>
+			</form>
+			<div th:replace="~{fragments :: back}"></div>
+		</div>
+	</div>
+
+	<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+</body>
+</html>

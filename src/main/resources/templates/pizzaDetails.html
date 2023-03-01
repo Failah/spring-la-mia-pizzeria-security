@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Dettagli Pizza</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+</head>
+<body class="vs-bg-custom vs-fixed-height-100">
+	<div th:replace="~{fragments :: navbar}"></div>
+	<div class="container">
+		<h1 class="mt-4 mb-4 text-center text-white">Dettagli pizza</h1>
+		<div class="row justify-content-center">
+			<div class="col-lg-6">
+				<div class="card vs-border vs-overflow">
+					<img class="img-fluid vs-card-border" th:src="${pizza.imgURL}"
+						alt="Immagine pizza">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<h2 class="card-title" th:text="${pizza.name}"></h2>
+								<p class="card-text" th:text="${pizza.description}"></p>
+								<p class="card-text"
+									th:text="'Prezzo: ' + ${pizza.price} + ' €'"></p>
+								<a class="btn btn-primary"
+									th:href="@{/pizzas/edit/{id}(id=${pizza.id})}">Modifica</a>
+
+								<form class="mt-3" action="#"
+									th:action="@{'/pizzas/delete/{id}'(id=${pizza.id})}"
+									method="post">
+									<button class="btn btn-danger" type="submit"
+										onclick="return confirm('Sei sicuro di voler eliminare questa pizza?');">
+										Elimina Pizza</button>
+								</form>
+
+							</div>
+							<div class="col-6">
+								<h3>Ingredienti:</h3>
+								<ul th:each="ingredient : ${pizza.ingredients}">
+									<li th:text="${ingredient.title}"></li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="mt-4">
+							<h3>Offerte speciali:</h3>
+							<ul th:if="${not #lists.isEmpty(pizza.specialOffer)}">
+								<li th:each="specialOffer : ${pizza.specialOffer}"><a
+									th:href="@{/special-offers/edit/{id}(id=${specialOffer.id})}">
+										<span th:text="${specialOffer.title}"></span>
+								</a> <span
+									th:text="' dal ' + ${#temporals.format(specialOffer.startDate, 'dd/MM/yyyy')} + ' al ' + ${#temporals.format(specialOffer.endDate, 'dd/MM/yyyy')}"></span>
+								</li>
+							</ul>
+							<p th:if="${#lists.isEmpty(pizza.specialOffer)}">Nessuna
+								offerta speciale al momento.</p>
+							<a class="btn btn-success mt-3"
+								th:href="@{|/special-offers/create?pizzaId=${pizza.id}|}">Crea
+								nuova offerta speciale</a>
+						</div>
+
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div th:replace="~{fragments :: back}"></div>
+	</div>
+	<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

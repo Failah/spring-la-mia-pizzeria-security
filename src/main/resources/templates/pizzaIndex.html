@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>La mia Pizzeria</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
+	<link rel="stylesheet"
+	th:href="@{/css/main.css}" />
+</head>
+<body class="vs-bg-custom vs-fixed-height-100">
+
+<div th:replace="~{fragments :: navbar}"></div>
+
+	<div class="container mt-4 bg-light p-4 vs-fixed-height-80 vs-border">
+		<h1 class="mt-2 mb-4 text-center">La mia pizzeria!</h1>
+
+		<form class="mb-3 row justify-content-center" th:action="@{/pizzas}"
+			method="get">
+			<div class="form-group col-4">
+				<input type="text" class="form-control" id="title" name="title"
+					placeholder="Cerca per titolo">
+			</div>
+			<button type="submit" class="btn btn-primary col-4 w-25">Cerca</button>
+		</form>
+
+		<div class="row vs-fixed-height-60">
+			<div class="col-md-12">
+				<table class="table table-striped"
+					th:if="${not #lists.isEmpty(pizzas)}">
+					<thead>
+						<tr>
+							<th>Immagine</th>
+							<th>Nome</th>
+							<th>Descrizione</th>
+							<th>Prezzo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="pizza : ${pizzas}">
+							<td><img class="img-fluid vs-index-img-maxH" width="120"
+								th:src="${pizza.imgURL}" /></td>
+							<td class="align-middle" th:text="${pizza.name}"></td>
+							<td class="align-middle" th:text="${pizza.description}"></td>
+							<td class="align-middle" th:text="${pizza.price} + ' €'"></td>
+							<td class="align-middle"><a th:href="@{/pizzas/{id}(id=${pizza.id})}"
+								class="btn btn-info">Dettagli</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="alert alert-info" th:if="${#lists.isEmpty(pizzas)}">
+					<p>Non ci sono pizze al momento!.</p>
+				</div>
+			</div>
+		</div>
+		<div class="mt-5 text-center">
+			<a th:href="@{/pizzas/new-pizza}" class="btn btn-success btn-block">Crea una Pizza</a>
+		</div>
+	</div>
+	<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+	
+</body>
+</html>
