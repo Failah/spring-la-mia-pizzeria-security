@@ -26,6 +26,9 @@ public class SecurityConfiguration {
 				// CONTROLLI SUGLI INGREDIENTI: ADMIN
 				.requestMatchers("/ingredients", "/ingredients/**").hasAuthority("ADMIN")
 
+				// CONTROLLI SULLE OFFERTE SPECIALI: ADMIN
+				.requestMatchers("/special-offers", "/special-offers/**").hasAuthority("ADMIN")
+
 				// ELENCO E DETTAGLIO PIZZE: USER E ADMIN
 				.requestMatchers("/pizzas", "/pizzas/**").hasAnyAuthority("USER", "ADMIN")
 
@@ -56,6 +59,8 @@ public class SecurityConfiguration {
 
 		authProvider.setUserDetailsService(userDetailsService());
 		authProvider.setPasswordEncoder(passwordEncoder());
+
+		System.out.println(passwordEncoder().encode("ciao"));
 
 		return authProvider;
 	}
