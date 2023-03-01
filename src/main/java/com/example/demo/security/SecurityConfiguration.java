@@ -16,6 +16,9 @@ public class SecurityConfiguration {
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+		String[] allRoles = { "USER", "ADMIN" };
+
 		http.authorizeHttpRequests()
 				// AUTH PER CREARE E MODIFICARE PIZZE: ADMIN
 				.requestMatchers("/pizzas/new-pizza", "/pizzas/edit/**").hasAuthority("ADMIN")
@@ -30,7 +33,7 @@ public class SecurityConfiguration {
 				.requestMatchers("/special-offers", "/special-offers/**").hasAuthority("ADMIN")
 
 				// ELENCO E DETTAGLIO PIZZE: USER E ADMIN
-				.requestMatchers("/pizzas", "/pizzas/**").hasAnyAuthority("USER", "ADMIN")
+				.requestMatchers("/pizzas", "/pizzas/**").hasAnyAuthority(allRoles)
 
 				// ACCESSO ALLA HOME: USER E ADMIN
 				.requestMatchers("/**").permitAll()
